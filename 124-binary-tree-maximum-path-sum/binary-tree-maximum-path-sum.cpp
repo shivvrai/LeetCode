@@ -10,24 +10,20 @@
  * };
  */
 class Solution {
+    
 public:
-    int solve( TreeNode* node, int& maxi ){
-        if( node == nullptr ){
-            return 0;
-        }
-        int lsum = solve( node->left, maxi );
-        lsum = max( 0, lsum );
-
-        int rsum = solve( node->right, maxi );
-        rsum = max( 0, rsum );
-
-        maxi = max( lsum + rsum + node->val, maxi );
-        return max( lsum, rsum ) + node->val;
+int maxi=INT_MIN;
+    int func(TreeNode*root){
+        if(!root)return 0;
+        int left=func(root->left);
+        if(left<0)left=0;
+        int right=func(root->right);
+        if(right<0)right=0;
+        maxi=max(maxi,root->val+left+right);
+        return root->val+max(left,right);
     }
-
     int maxPathSum(TreeNode* root) {
-        int maxi = INT_MIN;
-        int ans = solve( root, maxi );
+        int ans=func(root);
         return maxi;
     }
 };
