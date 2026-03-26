@@ -12,23 +12,21 @@
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        map<int,int> mp;int n=inorder.size()-1;
-        for(int i=0;i<inorder.size();i++){
+        map<int,int>mp;int n=preorder.size();
+        for(int i=0;i<n;i++){
             mp[inorder[i]]=i;
         }
-        if(inorder.size()==0)return nullptr;
-        return build(preorder,0,n,inorder,0,n,mp);
+        return build(preorder,inorder,0,n-1,0,n-1,mp);
     }
     private:
-    TreeNode* build(vector<int>& preorder,int ps,int pe, vector<int>& inorder,int is,int ie,map<int,int>&mp){
-        if(ps>pe || is>ie)return nullptr;
-        int root=preorder[ps];
-        TreeNode* node = new TreeNode(root);
-        int iss=mp[root];
+    TreeNode* build(vector<int>&preorder,vector<int>&inorder,int pres,int pree,int ins,int ine,map<int,int>&mp){
+        if (pres > pree || ins > ine) return nullptr;
+        TreeNode* root = new TreeNode(preorder[pres]);
+        int inindex=mp[preorder[pres]];
+        int lefts=inindex-ins;
+        root->left=build(preorder,inorder,pres+1,pres+lefts,ins,inindex-1,mp);
+        root->right=build(preorder,inorder,pres+lefts+1,pree,inindex+1,ine,mp);
+        return root;
 
-        int l=iss-is;
-        node->left=build(preorder,ps+1,pe+l,inorder,is,iss-1,mp);
-        node->right=build(preorder,ps+1+l,pe,inorder,iss+1,ie,mp);
-    return node;
     }
 };
