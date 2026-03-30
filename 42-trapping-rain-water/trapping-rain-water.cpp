@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int trap(std::vector<int>& height) {
-        int i = 0, left_max = height[0], sum = 0;
-        int j = height.size() - 1, right_max = height[j];
-        while (i < j) {
-            if (left_max <= right_max) {
-                sum += (left_max - height[i]);
-                i++;
-                left_max = std::max(left_max, height[i]);
-            } else {
-                sum += (right_max - height[j]);
-                j--;
-                right_max = std::max(right_max, height[j]);
-            }
+    int trap(vector<int>& arr) {int n=arr.size();
+        vector<int>premax(n,-1);int pm=0;
+        vector<int>suffmax(n,-1);int sm=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]>pm)pm=arr[i];
+            if(arr[n-i-1]>sm)sm=arr[n-i-1];
+            premax[i]=abs(pm);
+            
+            suffmax[n-i-1]=abs(sm);
+        }int sum=0;
+        for(int i=0;i<n;i++){
+            sum+=min(premax[i],suffmax[i])-arr[i];
         }
         return sum;
     }
