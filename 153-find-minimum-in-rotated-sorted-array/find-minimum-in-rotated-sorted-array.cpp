@@ -12,6 +12,6 @@ public:
             }
 
         }
-        return nums[right];
+        return nums[left];
     }
 };
