@@ -1,25 +1,37 @@
 class Solution {
-private: 
-    void permuteUnique(vector<int>& nums, vector<vector<int>>& output, vector<int> temp, int index){
-        if(index == nums.size()){
-            output.push_back(temp);
+public:
+    vector<vector<int>> result;
+
+    void backtrack(vector<int>& nums, vector<bool>& used, vector<int>& temp) {
+        if (temp.size() == nums.size()) {
+            result.push_back(temp);
             return;
         }
-        for(int i=index; i<temp.size(); i++){
-            swap(temp[index], temp[i]);
-            bool isPresent = find(output.begin(), output.end(), temp) != output.end();
-            if(isPresent){
+
+        for (int i = 0; i < nums.size(); i++) {
+            // Skip used elements
+            if (used[i]) continue;
+
+            // Skip duplicates
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])
                 continue;
-            }
-            permuteUnique(nums, output, temp, index+1);
+
+            used[i] = true;
+            temp.push_back(nums[i]);
+
+            backtrack(nums, used, temp);
+
+            temp.pop_back();
+            used[i] = false;
         }
     }
-public:
+
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        vector<vector<int>> output;
-        vector<int> temp = nums;
-        sort(temp.begin(), temp.end());
-        permuteUnique(nums, output, temp, 0);
-        return output;
+        sort(nums.begin(), nums.end());
+        vector<bool> used(nums.size(), false);
+        vector<int> temp;
+
+        backtrack(nums, used, temp);
+        return result;
     }
-};
+}; 
