@@ -11,20 +11,22 @@
  */
 class Solution {
 public:
-vector<vector<int>>ans;vector<int>curr;
-    void func(TreeNode* root,int sum){
-        if(!root)return;
-        sum-=root->val;
+    void func(TreeNode* root,vector<int>&curr,vector<vector<int>>& ans,int sum,int &target){
+        sum+=root->val;       
         curr.push_back(root->val);
-        if(sum==0 and !root->left and !root->right){
-            ans.push_back(curr);
-        }
-        func(root->left,sum);
-        func(root->right,sum);
+        if(!root->left and !root->right and sum==target)ans.push_back(curr);
+        if(root->left)func(root->left,curr,ans,sum,target);
+        if(root->right)func(root->right,curr,ans,sum,target);
+        
         curr.pop_back();
+
+        
     }
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-    func(root,targetSum);
-    return ans;
+        vector<int>curr;
+        vector<vector<int>>ans;
+        if(!root)return ans;
+        func(root,curr,ans,0,targetSum);
+        return ans;
     }
 };
