@@ -11,30 +11,27 @@ public:
 
 class Solution {
 public:
-    
     Node* flatten(Node* head) {
-        if(head==NULL)return head;
         Node* curr=head;
         while(curr){
-            if(curr->child!=NULL){
+            if(curr->child){
                 Node* next=curr->next;
-                Node* childs=flatten(curr->child);
-                curr->next=childs;
-                childs->prev=curr;
-                
-                curr->child=NULL;
-                Node* temp = childs;
-                while(temp->next!=NULL){
-                    temp = temp->next;
+                curr->next=flatten(curr->child);
+                curr->child=nullptr;
+                curr->next->prev=curr;
+                Node* temp=curr;
+
+                while(temp->next){
+                    temp=temp->next;
                 }
                 temp->next=next;
                 if(next)next->prev=temp;
 
-                curr=next;
 
             }
-            else 
-            curr=curr->next;
+            else {
+                curr=curr->next;
+            }
         }
         return head;
     }
