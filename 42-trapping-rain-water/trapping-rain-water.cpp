@@ -1,18 +1,19 @@
 class Solution {
 public:
-    int trap(vector<int>& arr) {int n=arr.size();
-        vector<int>premax(n,-1);int pm=0;
-        vector<int>suffmax(n,-1);int sm=0;
-        for(int i=0;i<n;i++){
-            if(arr[i]>pm)pm=arr[i];
-            if(arr[n-i-1]>sm)sm=arr[n-i-1];
-            premax[i]=abs(pm);
-            
-            suffmax[n-i-1]=abs(sm);
-        }int sum=0;
-        for(int i=0;i<n;i++){
-            sum+=min(premax[i],suffmax[i])-arr[i];
+    int trap(vector<int>& arr) {
+        int leftmax=0,rightmax=0,left=0,right=arr.size()-1;int rainwater=0;
+        while(left<right){
+                if(arr[left]>=leftmax)leftmax=arr[left];
+                if(arr[right]>=rightmax){
+                    rightmax=arr[right];
+                }
+
+            if(leftmax<=rightmax){
+                rainwater+=leftmax-arr[left];left++;
+            }else{
+                rainwater+=rightmax-arr[right];right--;
+            }
         }
-        return sum;
+        return rainwater;
     }
 };
