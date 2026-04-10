@@ -6,7 +6,7 @@ public:
 
         for (int i = 0; i < n; i++) {
             int complement = target - nums[i];
-            if (numMap.count(complement)) {
+            if (numMap.find(complement)!=numMap.end()) {
                 return {numMap[complement], i};
             }
             numMap[nums[i]] = i;
