@@ -19,7 +19,7 @@ public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
         int n = hand.size();
         if (n % groupSize != 0) return false;
-        std::sort(hand.begin(), hand.end());
+        sort(hand.begin(), hand.end());
         for (int i = 0; i < n; i++) {
             if (hand[i] >= 0) {
                 if (!findSuccessors(hand, groupSize, i, n)) return false;
