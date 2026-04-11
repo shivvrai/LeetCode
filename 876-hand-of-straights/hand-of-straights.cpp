@@ -2,7 +2,7 @@ class Solution {
 public:
    bool findSuccessors(vector<int>& hand, int groupSize, int i, int n) {
         int next = hand[i] + 1;
-        hand[i] = -1;  // Mark as used
+        hand[i] = -1;  
         int count = 1;
         i += 1;
         while (i < n && count < groupSize) {
