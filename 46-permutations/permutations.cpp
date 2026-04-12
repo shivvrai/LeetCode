@@ -1,20 +1,21 @@
 class Solution {
-public:
-    void perms(int i,vector<vector<int>>& res,vector<int>& nums){
-        if(i==nums.size()){
-            res.push_back(nums);
-            return;
+public:int n=0;
+    void func(int i,vector<vector<int>>&ans,vector<int>&arr){
+        if(i==n){
+            ans.push_back(arr);return;
         }
+        for(int j=i;j<n;j++){
+            swap(arr[i],arr[j]);
+            func(i+1,ans,arr);
+            swap(arr[i],arr[j]);
 
-        for(int j=i;j<nums.size();j++){
-            swap(nums[i],nums[j]);
-            perms(i+1,res,nums);
-            swap(nums[i],nums[j]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> res;
-        perms(0,res,nums);
-        return res ;
+        n=nums.size();
+        vector<vector<int>>ans;
+        vector<int>curr;
+        func(0,ans,nums);
+        return ans;
     }
 };
