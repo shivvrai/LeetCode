@@ -2,13 +2,12 @@ class Solution {
 public:int n=0;
 void func(vector<int>&arr,vector<vector<int>>& ans,
         vector<int>& curr,int i){
-    if(i==n){
-        ans.push_back(curr);return;
+    ans.push_back(curr);
+    for(int j=i;j<n;j++){
+        curr.push_back(arr[j]);
+        func(arr,ans,curr,j+1);
+        curr.pop_back();
     }
-    curr.push_back(arr[i]);
-    func(arr,ans,curr,i+1);
-    curr.pop_back();
-    func(arr,ans,curr,i+1);
 }
     vector<vector<int>> subsets(vector<int>& nums) {
         n=nums.size();
