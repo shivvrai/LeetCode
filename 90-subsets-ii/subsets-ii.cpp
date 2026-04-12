@@ -1,21 +1,25 @@
-    class Solution {
-public:
-    vector<vector<int> > subsetsWithDup(vector<int> &S) {
-        vector<vector<int> > totalset = {{}};
-        sort(S.begin(),S.end());
-        for(int i=0; i<S.size();){
-            int count = 0; 
-            while(count + i<S.size() && S[count+i]==S[i])  count++;
-            int previousN = totalset.size();
-            for(int k=0; k<previousN; k++){
-                vector<int> instance = totalset[k];
-                for(int j=0; j<count; j++){
-                    instance.push_back(S[i]);
-                    totalset.push_back(instance);
-                }
-            }
-            i += count;
-        }
-        return totalset;
-        }
+class Solution {
+public:int n=0;
+void func(int index,vector<vector<int>>&ans,vector<int>&curr,vector<int>&arr){
+   
+        ans.push_back(curr);
+    
+    for(int i=index;i<n;i++){
+        if(i>index and arr[i]==arr[i-1])continue;
+        curr.push_back(arr[i]);
+        func(i+1,ans,curr,arr);
+        curr.pop_back();
+        
+    }
+
+
+}
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        n=nums.size();
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
+        vector<int>curr;
+        func(0,ans,curr,nums);
+        return ans;
+    }
 };
