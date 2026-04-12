@@ -21,7 +21,7 @@ public:
             }
         }
         vector<int>emp;
-        if(ans.size()!=n)return emp;
+        if(ans.size()!=n)return {};
         return ans;
     }
 };
