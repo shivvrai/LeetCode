@@ -1,21 +1,24 @@
 class Solution {
 public:int n=0;
-    void func(int i,vector<vector<int>>&ans,vector<int>&arr){
-        if(i==n){
-            ans.push_back(arr);return;
-        }
-        for(int j=i;j<n;j++){
-            swap(arr[i],arr[j]);
-            func(i+1,ans,arr);
-            swap(arr[i],arr[j]);
-
-        }
+void func(vector<vector<int>>&ans,vector<int>&curr,vector<int>&arr,vector<bool>&used){
+    if(curr.size()==n){
+        ans.push_back(curr);
+        return;
     }
+    for(int i=0;i<n;i++){
+        if(used[i])continue;
+        used[i]=true;
+        curr.push_back(arr[i]);
+        func(ans,curr,arr,used);
+        curr.pop_back();
+        used[i]=false;
+    }
+}
     vector<vector<int>> permute(vector<int>& nums) {
         n=nums.size();
-        vector<vector<int>>ans;
-        vector<int>curr;
-        func(0,ans,nums);
+        vector<int>curr;vector<vector<int>>ans;
+        vector<bool>used(n,false);
+        func(ans,curr,nums,used);
         return ans;
     }
 };
