@@ -15,8 +15,7 @@ public:
             pq.pop();
             int u=node.second;
             int w=node.first;
-            if (w > time[u]) continue;
-            t=max(t,w);
+           
             for(auto v:adj[u]){
                 if(w+v.second<time[v.first]){
                     time[v.first]=w+v.second;
@@ -26,6 +25,7 @@ public:
         }
         for(int i=1;i<=n;i++){
             if(time[i]==INT_MAX)return -1;
+            t=max(t,time[i]);
 
         }
         return t;
