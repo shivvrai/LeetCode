@@ -1,31 +1,29 @@
 class Solution {
-public:  
-    void solve(int index ,vector<int>& candidates, int target, vector<int>& path ,   vector<vector<int>>& ans){
-        
-        if(target==0) {
-            ans.push_back(path);
-            return ;
+public:int k=0;
+    void func(int index,vector<vector<int>>&ans,
+        vector<int>&curr,vector<int>&arr,int sum){
+        if(sum==k){
+            ans.push_back(curr);
+            return;
         }
+        for(int i=index;i<arr.size();i++){
+            if(i>index and arr[i]==arr[i-1])continue;
+            if(sum+arr[i]<=k){
+                sum+=arr[i];
+                curr.push_back(arr[i]);
+                func(i+1,ans,curr,arr,sum);
+                curr.pop_back();
+                sum-=arr[i];
+            }
 
-       for (int i = index; i < candidates.size(); i++) {
-
-            
-            if (i > index && candidates[i] == candidates[i - 1]) continue;
-
-            if (candidates[i] > target) break;
-
-            path.push_back(candidates[i]);
-           
-            solve(i + 1, candidates, target - candidates[i], path, ans);
-
-            path.pop_back();
         }
     }
+
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end());
-         vector<vector<int>> ans;
-        vector<int> path;
-        solve(0, candidates, target ,path, ans);
+        vector<vector<int>>ans;k=target;
+        sort(candidates.begin(),candidates.end());
+        vector<int>curr;
+        func(0,ans,curr,candidates,0);
         return ans;
     }
 };
