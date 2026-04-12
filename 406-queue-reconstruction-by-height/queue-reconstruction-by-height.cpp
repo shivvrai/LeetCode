@@ -1,15 +1,16 @@
 class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-        sort(people.begin(), people.end(), cmp);
-        vector<vector<int>> res;
-        for(int i = 0; i < people.size(); i++){
-            res.insert(res.begin()+people[i][1], people[i]);
+        sort(people.begin(), people.end(), [](vector<int>& a, vector<int>& b){
+            return (a[0] == b[0])? a[1] < b[1] : a[0] > b[0];
+        });
+
+        vector<vector<int>> result;
+        
+        for (auto& person : people) {
+            result.insert(result.begin() + person[1], person);
         }
-        return res;
-    }
-    static bool cmp(vector<int>& p1, vector<int>& p2){
-        if(p1[0]!=p2[0]) return p1[0]>p2[0];
-        else return p1[1]<p2[1];
+
+        return result;
     }
 };
