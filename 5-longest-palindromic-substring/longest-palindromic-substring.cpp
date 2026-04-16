@@ -18,11 +18,11 @@ public:
     }
     private:
     int func(string &s,int left,int right){
-        int count=0;
+        
         while(left>=0 and right<s.size() and s[left]==s[right]){
             left--;
             right++;
-            count++;
+            
         }
         return right-left-1;
     }
