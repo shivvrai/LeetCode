@@ -10,23 +10,26 @@
  * };
  */
 class Solution {
-public:
- int dfs(TreeNode* root,int &count)
-{
-  if(!root)  return 1;
-  int right =dfs(root->right,count);
-  int left = dfs(root->left,count); 
-  if(right==2 || left==2) 
-  {
-    count++;
-    return 0;
-  }
-  return min(left,right)+1; 
-}
+public:\
+//0 if camera needed 
+//1 cmaera not neede her e
+//2 camera is ther e
+int cam=0;
+    int func(TreeNode* root){
+        if(!root)return 1;
+        int left=func(root->left);
+        int right=func(root->right);
+        if(left==0 or right ==0){
+            cam++;return 2;
+        }
+        if(left==2 or right ==2){
+            return 1;
+        }
+        return 0;
+
+
+    }
     int minCameraCover(TreeNode* root) {
-        int count = 0;
-        int k = dfs(root,count);
-        if(k==2) count++;
-        return count;        
+        if(func(root)==0)cam++;;return cam;
     }
 };
