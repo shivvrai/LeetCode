@@ -35,7 +35,7 @@ public:
         for(auto c : edges){
             int u = c[0];
             int v = c[1];
-            if(findupar(u) == findupar(v) ){
+            if(findupar(u) == findupar(v) || findupar(v) == findupar(u)){
                 ans[0] = u;
                 ans[1] = v;
             }
