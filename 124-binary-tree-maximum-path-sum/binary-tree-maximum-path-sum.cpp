@@ -10,20 +10,17 @@
  * };
  */
 class Solution {
-    
-public:
-int maxi=INT_MIN;
-    int func(TreeNode*root){
+public:int ans=INT_MIN;
+    int func(TreeNode* root){
         if(!root)return 0;
         int left=func(root->left);
         if(left<0)left=0;
         int right=func(root->right);
         if(right<0)right=0;
-        maxi=max(maxi,root->val+left+right);
+        ans=max(root->val+left+right,ans);
         return root->val+max(left,right);
     }
     int maxPathSum(TreeNode* root) {
-        int ans=func(root);
-        return maxi;
+        func(root);return ans;
     }
 };
