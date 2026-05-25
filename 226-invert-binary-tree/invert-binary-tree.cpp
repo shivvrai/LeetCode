@@ -11,16 +11,13 @@
  */
 class Solution {
 public:
- void in(TreeNode* root){
-    if(!root)return ;
-       TreeNode* temp=root->left;
-       root->left=root->right;
-       root->right=temp;
-       in(root->left);
-       in(root->right);
+ void func(TreeNode* root){
+    if(!root)return;
+    swap(root->left,root->right);
+    func(root->left);func(root->right);
+
  }
     TreeNode* invertTree(TreeNode* root) {
-        in(root);
-       return root;
+        func(root);return root;
     }
 };
