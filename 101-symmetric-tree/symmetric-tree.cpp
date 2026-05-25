@@ -11,12 +11,13 @@
  */
 class Solution {
 public:
-bool func(TreeNode* l,TreeNode* r){
-    if(!l and !r)return true;
-    if(!l or !r)return false;
-    return l->val==r->val and func(l->left,r->right) and func(l->right,r->left);
-}
+    bool func(TreeNode* p,TreeNode* q){
+        if(!p and !q )return true;
+        if(!p || !q )return false;
+        return (p->val==q->val)and func(p->left,q->right) and func(q->left,p->right);
+    }
     bool isSymmetric(TreeNode* root) {
-        return func(root->left,root->right);
+        if(!root)return false;
+       return func(root->left,root->right);
     }
 };
