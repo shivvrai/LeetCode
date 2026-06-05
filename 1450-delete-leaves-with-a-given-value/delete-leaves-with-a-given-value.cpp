@@ -11,16 +11,13 @@
  */
 class Solution {
 public:
-    TreeNode* func(TreeNode* root,int k){
-        if(!root )return nullptr;
-        root->left=func(root->left,k);
-        root->right=func(root->right,k);
-        if(!root->left and !root->right and root->val == k and 1)return nullptr;
-        return root; 
-        
-    }
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        return func(root,target);
-       
+        if(!root)return root;
+        root->left=removeLeafNodes(root->left,target);
+        root->right=removeLeafNodes(root->right,target);
+        if(!root->left and !root->right and root->val==target)return nullptr;
+        
+        return root;
+
     }
 };
