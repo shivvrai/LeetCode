@@ -1,28 +1,28 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        int l=0,r=0;
-
-        vector<int>freq(256,0);
-        int len=INT_MAX;int ss=0;
-
-        for(auto i:t)freq[i]++;int count=t.size();
-        if(t.size()>s.size())return "";
-        while(r<s.size()){
-            if(freq[s[r]]>0)count--;
-            freq[s[r]]--;r++;
+        int count =0;int minlength=INT_MAX;
+        map<char,int>mp;
+        for( auto i:t){
+            mp[i]++;
+            count++;
+        }
+        int i=0;int start=0,end=0;
+        for(int j=0;j<s.size();j++){
+            if(mp[s[j]]>0)count--;
+            mp[s[j]]--;
             while(count==0){
-                if(r-l<len){
-                    len=r-l;
-                    ss=l;
+                if(j-i+1<minlength){
+                    start=i;
+                    end=j;
+                    minlength=j-i+1;
                 }
-            freq[s[l]]++;
-                if(freq[s[l]]>0)count++;
-                l++;
-
+                mp[s[i]]++;
+                if(mp[s[i]]>0)count++;
+                i++;
             }
         }
-        if(len==INT_MAX)return "";
-        return s.substr(ss,len);
+        return minlength == INT_MAX ? "" : s.substr(start, minlength);
+        
     }
 };
