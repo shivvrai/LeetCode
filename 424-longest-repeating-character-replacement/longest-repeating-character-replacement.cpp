@@ -1,20 +1,19 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
+        map<char,int>mp;int n=s.size();
         int maxfreq=0;
-        map<int,int>freq;int len=0;
-        int i=0;
-        for(int j=0;j<s.size();j++){
-            freq[s[j]]++;
-            maxfreq=max(maxfreq,freq[s[j]]);
-            while(j-i+1 - maxfreq > k){
-                freq[s[i]]--;
-                i++;
+        int left=0;int maxlength=0;
+        for(int right=0;right<n;right++){
+            mp[s[right]]++;
+            maxfreq=max(maxfreq,mp[s[right]]);
+            while(right-left+1 - maxfreq>k){
+                mp[s[left]]--;
+                left++;
                 
             }
-            len=max(len,j-i+1);
-
+            maxlength=max(maxlength,right-left+1);
         }
-        return len;
+        return maxlength;
     }
 };
