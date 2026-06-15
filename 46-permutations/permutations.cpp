@@ -1,26 +1,24 @@
 class Solution {
 public:
-    void func(int start,vector<bool>&empty,vector<int>&arr,vector<vector<int>>&ans,vector<int>&curr){
+    void func(vector<int>&curr,vector<int>&arr,vector<vector<int>>&ans,vector<bool>&used){
         if(curr.size()==arr.size()){
-            ans.push_back(curr);
-            return;
+            ans.push_back(curr);return;
         }
         for(int i=0;i<arr.size();i++){
-            if(empty[i]==true){
+            if(used[i])continue;
             curr.push_back(arr[i]);
-            empty[i]=false;
-            func(i+1,empty,arr,ans,curr);
+            used[i]=true;
+            func(curr,arr,ans,used);
+            used[i]=false;
             curr.pop_back();
-            empty[i]=true;}
-
         }
     }
-        vector<vector<int>> permute(vector<int>& nums) {
-            int n=nums.size();
-        vector<bool>empty(n+1,true);
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n=nums.size();
         vector<int>curr;
+        vector<bool>used(n,false);
         vector<vector<int>>ans;
-        func(0,empty,nums,ans,curr);
+        func(curr,nums,ans,used);
         return ans;
     }
 };
