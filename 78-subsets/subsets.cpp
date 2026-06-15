@@ -1,19 +1,17 @@
 class Solution {
-public:int n=0;
-void func(vector<int>&arr,vector<vector<int>>& ans,
-        vector<int>& curr,int i){
-    ans.push_back(curr);
-    for(int j=i;j<n;j++){
-        curr.push_back(arr[j]);
-        func(arr,ans,curr,j+1);
-        curr.pop_back();
+public:
+    void func(int start,vector<int>&curr,vector<int>&arr,vector<vector<int>>&ans){
+        ans.push_back(curr);
+        for(int i=start;i<arr.size();i++){
+            curr.push_back(arr[i]);
+            func(i+1,curr,arr,ans);
+            curr.pop_back();
+        }
     }
-}
     vector<vector<int>> subsets(vector<int>& nums) {
-        n=nums.size();
-        vector<vector<int>>ans;
         vector<int>curr;
-        func(nums,ans,curr,0);
+        vector<vector<int>>ans;
+        func(0,curr,nums,ans);
         return ans;
     }
 };
