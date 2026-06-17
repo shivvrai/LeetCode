@@ -1,40 +1,40 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();int freshoranges=0,time=0;
         queue<pair<int,int>>q;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]==2){
-                    q.push({i,j});
-                }
-                else if(grid[i][j]==1)freshoranges++;
+        int fresh=0;
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j]==1)fresh++;
+                if(grid[i][j]==2)q.push({i,j});
+
             }
-        }
-        vector<int> dx={1,-1,0,0};
-        vector<int> dy={0,0,-1,1};
-        if(freshoranges==0)return time;
-        while(!q.empty()){
-            int level=q.size();
-            bool rotten=false;
-            for(int i=0;i<level;i++){
+        }int time=0;
+        while(q.size()){
+            int n=q.size();
+            
+            bool flag=false;
+            vector<int>dx={-1,1,0,0};
+            vector<int>dy={0,0,1,-1};
+            for(int i=0;i<n;i++){
                 auto p=q.front();
-                int x=p.first;
-                int y=p.second;
-                q.pop();
+            q.pop();
+            int r=p.first;
+            int c=p.second;
                 for(int i=0;i<4;i++){
-                    int nx=x+dx[i];
-                    int ny=y+dy[i];
-                    if(nx>=0 and ny>=0 and nx<n and ny<m and grid[nx][ny]==1){
-                        q.push({nx,ny});
-                        grid[nx][ny]=2;
-                        freshoranges--;rotten=true;
+                    int nr=r+dx[i];int nc=c+dy[i];
+                    if(nc>=0 and nr>=0 and nc<grid[0].size() and nr<grid.size() and grid[nr][nc]==1){
+                        q.push({nr,nc});
+                        fresh--;
+                        flag = true;
+                        grid[nr][nc]=2;
                     }
                 }
             }
-            if(rotten)time++;
+            if(flag)time++;
+            
+
         }
-        return (freshoranges==0 ? time : -1);
+        return (fresh==0?time:-1);
     }
 };
