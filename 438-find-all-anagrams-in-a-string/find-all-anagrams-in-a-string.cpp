@@ -1,60 +1,27 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> freqP(26, 0); // Frequency of characters in p
-        vector<int> freqW(26, 0); // Frequency of characters in current window
+
+        vector<int> freq(256,0);
+        int count = p.size();
+        for(char c : p)
+            freq[c]++;
         vector<int> ans;
-        
-        int k = p.size();
-        int n = s.size();
-        
-        if(k > n) return ans;
-        
-        // Initialize frequencies for p and the first window of s
-        for(char c : p){
-            freqP[c - 'a']++;
-        }
-        for(int i = 0; i < k; i++){
-            freqW[s[i] - 'a']++;
-        }
-        
-        // Count initial matches between the two frequency arrays
-        // We check if the count of 'a', 'b', ... 'z' is identical
-        int matches = 0;
-        for(int i = 0; i < 26; i++){
-            if(freqP[i] == freqW[i]) matches++;
-        }
-        
-        // Check the very first window (index 0)
-        if(matches == 26){
-            ans.push_back(0);
-        }
-        
-        // Slide the window across s
-        for(int i = k; i < n; i++){
-            int right = s[i] - 'a';      // New character entering window
-            int left = s[i - k] - 'a';   // Old character leaving window
-            
-            // --- Add Right Character ---
-            // If it was matching before, it won't match after we add one more
-            if(freqP[right] == freqW[right]) matches--;
-            freqW[right]++;
-            // If it matches now, increment matches
-            if(freqP[right] == freqW[right]) matches++;
-            
-            // --- Remove Left Character ---
-            // If it was matching before, it won't match after we remove one
-            if(freqP[left] == freqW[left]) matches--;
-            freqW[left]--;
-            // If it matches now, increment matches
-            if(freqP[left] == freqW[left]) matches++;
-            
-            // If all 26 characters have matching counts, it's an anagram
-            if(matches == 26){
-                ans.push_back(i - k + 1);
+        int left = 0;
+        for(int right = 0; right < s.size(); right++) {
+            if(freq[s[right]] > 0)
+                count--;
+            freq[s[right]]--;
+            if(right - left + 1 > p.size()) {
+                freq[s[left]]++;
+                if(freq[s[left]] > 0)
+                    count++;
+                left++;
             }
+            if(count == 0)
+                ans.push_back(left);
         }
-        
+
         return ans;
     }
 };
