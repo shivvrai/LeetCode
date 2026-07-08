@@ -15,13 +15,15 @@ public:
 */
 
 class Solution {
-public:
+public: 
+unordered_map<Node*,Node*>mp;
+
     Node* copyRandomList(Node* head) {
-        unordered_map<Node*,Node*>mp;
+        if (head == NULL) return NULL;
         Node* curr=head;
         while(curr){
-            mp[curr]=new Node(curr->val);
-            curr=curr->next;
+        mp[curr]=new Node(curr->val);
+        curr=curr->next;
         }
         curr=head;
         while(curr){
