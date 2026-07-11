@@ -1,25 +1,28 @@
 class Solution {
 public:
-    struct compare{
-        bool operator()(pair<string,int>& p1 ,pair<string,int>& p2){
-            if(p1.second==p2.second)return p1.first>p2.first;
-            return p1.second<p2.second;
+    class compare{
+        public:
+        bool operator()(pair<string ,int>&a,pair<string,int>&b){
+            if(a.second==b.second)return a.first < b.first;
+            return a.second > b.second;//minheap
         }
     };
     vector<string> topKFrequent(vector<string>& words, int k) {
+        priority_queue<pair<string,int>,vector<pair<string,int>>,compare>pq;
         map<string,int>mp;
-        for(auto i:words)mp[i]++;
-        priority_queue<pair<string,int>, vector<pair<string,int>>, compare> pq;
-         for (auto &p : mp) {
-            pq.push(p);
+        for(auto i:words){
+            mp[i]++;
+        }
+        for(auto i:mp){
+            pq.push({i.first,i.second});
+            if(pq.size()>k)pq.pop();
         }
         vector<string>ans;
-        for(int i=0;i<k;i++){
-                auto node=pq.top();
-                pq.pop();
-
-                ans.push_back(node.first);
+        while(pq.size()){
+            ans.push_back(pq.top().first);
+            pq.pop();
         }
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
