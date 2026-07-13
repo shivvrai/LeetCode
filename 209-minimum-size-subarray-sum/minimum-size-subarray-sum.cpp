@@ -1,17 +1,17 @@
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& arr) {
-        int sum=0,minlen=INT_MAX,j=0;
-        for(int i=0;i<arr.size();i++){
-            sum+=arr[i];
+        int left=0,right=0,minilen=INT_MAX,sum=0;
+        if(!arr.size())return 0;
+        for(right=0;right<arr.size();right++){
+            sum+=arr[right];
             while(sum>=target){
-                minlen=min(minlen,i-j+1);
-                sum-=arr[j];
-                j++;
+                minilen=min(minilen,right-left+1);
+                sum-=arr[left];
+                left++;
 
             }
-
         }
-        return minlen==INT_MAX? 0 :minlen;
+        return minilen==INT_MAX?0:minilen;
     }
 };
