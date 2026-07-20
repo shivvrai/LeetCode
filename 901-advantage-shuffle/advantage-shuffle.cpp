@@ -7,10 +7,10 @@ public:
         int n = nums1.size();
           vector<int>ans(n);
         for(int i = 0; i < nums2.size(); i++){
-            q.push({nums2[i], i});// larger elements in the top of the queue 
+            q.push({nums2[i], i});
         }
-          int small = 0;// pointer for inserting small elements in the nums1 array 
-        int big =  n - 1; // pointer for inserting larger elemtn in the nums1 array 
+          int small = 0;
+        int big =  n - 1; 
         while (!q.empty()){
             auto top = q.top();
             q.pop();
